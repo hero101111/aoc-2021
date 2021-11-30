@@ -1,0 +1,12 @@
+.suo
+.db
+.opendb
+.ipch
+.VC.db
+.VC.opendb
+
+Debug/
+Release/
+.vs/
+out.txt
+verbose.txt

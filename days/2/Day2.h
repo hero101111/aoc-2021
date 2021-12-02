@@ -28,14 +28,56 @@ public:
 
   long DoWork1()
   {
-
-    return 0;
+    int horiz = 0;
+    int depth = 0;
+    
+    for (auto l : mData)
+    {
+      auto tokens = tok(l);
+      int value = stoi(tokens[1]);
+      if (tokens[0] == "forward")
+      {
+        horiz+=value;
+      }
+      if (tokens[0] == "down")
+      {
+        depth+=value;
+      }
+      
+      if (tokens[0] == "up")
+      {
+        depth-=value;
+      }
+    }
+    return horiz * depth;
   }
 
   long DoWork2()
   {
-
-    return 0;
+    int horiz = 0;
+    int depth = 0;
+    int aim = 0;
+    
+    for (auto l : mData)
+    {
+      auto tokens = tok(l);
+      int value = stoi(tokens[1]);
+      if (tokens[0] == "forward")
+      {
+        horiz+=value;
+        depth += aim * value;
+      }
+      if (tokens[0] == "down")
+      {
+        aim+=value;
+      }
+      
+      if (tokens[0] == "up")
+      {
+        aim-=value;
+      }
+    }
+    return horiz * depth;
   }
   
   string Part1() override
@@ -54,6 +96,9 @@ public:
 
   bool Test() override
   {
+    mCurrentInput = "test";
+    assert(Part1() == "150");
+    assert(Part2() == "900");
     return true;
   }
 };

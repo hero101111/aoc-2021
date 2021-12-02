@@ -67,11 +67,13 @@ int main(int argc, char** argv)
   if (runPartOne)
   {
     cout << "Running Day " << DAY << " PART 1 " << endl;
+    runner->mCurrentInput = "input";
     result = runner->Part1();
   }
   else
   {
     cout << "Running Day " << DAY << " PART 2 " << endl;
+    runner->mCurrentInput = "input";
     result = runner->Part2();
   }
 

@@ -90,6 +90,9 @@ public:
 
   bool Test() override
   {
+    mCurrentInput = "test";
+    assert(Part1() == "7");
+    assert(Part2() == "5");
     return true;
   }
 };

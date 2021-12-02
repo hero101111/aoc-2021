@@ -124,8 +124,8 @@ struct Point
   long long x{ 0 }, y{ 0 }, z{ 0 }, w{ 0 };
 
   Point() {}
-  Point(long long ax, long long ay, long long az = 0, long long aw = 0) : x(ax), y(ay), z(az), w(aw) { }
-  Point(string ax, string ay, string az = "0", string aw = "0") : x(stoll(ax)), y(stoll(ay)), z(stoll(az)), w(stoll(aw)) { }
+  Point(long long ax, long long ay = 0, long long az = 0, long long aw = 0) : x(ax), y(ay), z(az), w(aw) { }
+  Point(string ax, string ay = "0", string az = "0", string aw = "0") : x(stoll(ax)), y(stoll(ay)), z(stoll(az)), w(stoll(aw)) { }
   Point(tuple<string, string> coord) : x(stoll(get<0>(coord))), y(stoll(get<1>(coord))), z(0) { }
   Point(tuple<string, string, string> coord) : x(stoll(get<0>(coord))), y(stoll(get<1>(coord))), z(stoll(get<2>(coord))) { }
 
@@ -718,6 +718,20 @@ public:
     return *this;
   }
   
+  DynamicMap<T>& operator =(const vector<T> & aOther)
+  {
+    max_y = numeric_limits<int>::min();
+    max_x = numeric_limits<int>::min();
+    min_x = numeric_limits<int>::max();
+    min_y = numeric_limits<int>::max();
+    data = {};
+    for (size_t i = 0; i < aOther.size(); ++i)
+    {
+      set(i, aOther[i]);
+    }
+    return *this;
+  }
+  
   bool at(Point p, T * aOutVal)
   {
     auto xData = data.find(p.x);
@@ -880,6 +894,11 @@ public:
         }
       }
     return ret;
+  }
+  
+  size_t count()
+  {
+    return for_each([](T &){ return true; });
   }
 
   vector<pair<Point, T>> Traverse()

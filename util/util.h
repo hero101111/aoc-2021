@@ -42,6 +42,17 @@ vector<string> tok(string str, char sep = ' ')
   return ret;
 }
 
+void fprintf(string filePath, string message, bool append = false)
+{
+  ofstream fOut;
+  fOut.open(filePath, append ? ios_base::app : ios_base::out);
+
+  if(append)
+    fOut << endl;
+  if (message.size() > 0)
+    fOut << message << endl;
+}
+
 template<class T>
 string join(const list<T>&  v, string sep = ","s)
 {
@@ -85,7 +96,11 @@ vector<LL> stoll(const vector<string> & aVec)
 {
   vector<LL> ret;
   for (auto d : aVec)
+  {
+    if (d.empty())
+      continue;
     ret.push_back(stoll(d));
+  }
   return ret;
 }
 
@@ -582,24 +597,24 @@ tuple<string, string, string, string, string, string> RegExMatch6(string s, stri
   return ret;
 }
 
-bool RegexIsMatch(string s, string regex)
+bool RegExIsMatch(string s, string regex)
 {
   std::regex re2(regex);
   std::smatch match2;
   return std::regex_search(s, match2, re2);
 }
 
-string RegexReplace(string s, string rgx, string replace)
+string RegExReplace(string s, string rgx, string replace)
 {
   regex re(rgx);
   return regex_replace(s, re, replace);
 }
 
-string RegexReplace(string s, initializer_list<pair<string, string>> replace)
+string RegExReplace(string s, initializer_list<pair<string, string>> replace)
 {
   for (auto kv : replace)
   {
-    s = RegexReplace(s, kv.first, kv.second);
+    s = RegExReplace(s, kv.first, kv.second);
   }
   return s;
 }

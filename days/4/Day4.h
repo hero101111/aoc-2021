@@ -112,14 +112,27 @@ public:
     }
     maps.push_back(currentMap);
     
+    
     set<LL> extracted;
+  
+    set<int> bucket;
+    for (size_t i = 0; i < maps.size(); ++i)
+      bucket.insert(i);
+    
     bool foundSolution = false;
+    
     while (extracted.size() < numbers.size())
     {
-      extracted.insert(numbers[extracted.size()]);
+      if (!foundSolution)
+        extracted.insert(numbers[extracted.size()]);
       
-      for (auto currentMap : maps)
+      foundSolution = false;
+      size_t crtMapIndex = 0;
+      
+      for (auto b : bucket)
       {
+        auto & currentMap = maps[b];
+        
         for (auto line : currentMap.range_y())
         {
           auto lineItems = vec2set(currentMap.GetLine(line));
@@ -132,30 +145,62 @@ public:
             {
               sum += ix;
             }
-            return sum * numbers[extracted.size() - 1];
+            
+            auto val = sum * numbers[extracted.size() - 1];
+            cout << b << " " << val << endl;
+            if (val == 0)
+            {
+              int k = 0; ++k;
+            }
+            
+            bucket.erase(b);
+      
+            foundSolution = true;
+            break;
+          }
+        }
+      
+        if (!foundSolution)
+        {
+          for (auto column : currentMap.range_x())
+          {
+            auto columnItems = vec2set(currentMap.GetColumn(column));
+            if (setContains(extracted, columnItems))
+            {
+              set<LL> boardItems = extract(currentMap);
+              set<LL> unmarked = getDifference(boardItems, extracted);
+              LL sum = 0;
+              for (auto ix : unmarked)
+              {
+                sum += ix;
+              }
+              
+              auto val = sum * numbers[extracted.size() - 1];
+              cout << b << " " << val << endl;
+              if (val == 0)
+              {
+                int k = 0; ++k;
+              }
+              
+              foundSolution = true;
+              
+              bucket.erase(b);
+              break;
+              
+            }
           }
         }
         
-        for (auto column : currentMap.range_x())
-        {
-          auto columnItems = vec2set(currentMap.GetColumn(column));
-          if (setContains(extracted, columnItems))
-          {
-            set<LL> boardItems = extract(currentMap);
-            set<LL> unmarked = getDifference(boardItems, extracted);
-            LL sum = 0;
-            for (auto ix : unmarked)
-            {
-              sum += ix;
-            }
-            return sum * numbers[extracted.size() - 1];
-          }
-        }
+        if (foundSolution)
+          break;
+        else if (crtMapIndex == maps.size() - 1)
+          break;
+        else crtMapIndex++;
       }
     }
     
     
-    return ret;
+    return 123;
   }
 
   LL DoWork2()
@@ -180,8 +225,8 @@ public:
 
   bool Test() override
   {
-   // mCurrentInput = "test";
-   // string part1 = Part1();
+    //mCurrentInput = "test";
+    //string part1 = Part1();
     //part1;
     return true;
   }

@@ -29,6 +29,40 @@ void pic(T v)
   return pic(std::to_string(v));
 }
 
+template<typename T>
+set<T> vec2set(vector<T> v)
+{
+    set<T> ret;
+    for (auto d : v)
+        ret.insert(d);
+    return ret;
+}
+
+template<typename T>
+bool setContains(set<T> big, set<T> smallSet)
+{
+    for (auto el : smallSet)
+    {
+        if (big.find(el) == end(big))
+            return false;
+    }
+    return true;
+}
+
+template<typename T>
+set<T> getDifference(set<T> a, set<T> b)
+{
+    set<T> ret;
+    for (auto el : a)
+    {
+        if (b.find(el) == end(b))
+        {
+            ret.insert(el);
+        }
+    }
+    return ret;
+}
+
 vector<string> tok(string str, char sep = ' ')
 {
   stringstream s(str); // Used for breaking words 
@@ -513,6 +547,60 @@ struct Point
   bool IsInGrid(int width, int height, int depth = 0) const
   {
     return x >= 0 && y >= 0 && x < width && y < height && z >= 0 && z < depth;
+  }
+
+  vector<Point> GetTo(Point b, bool walkInStraightLines = false) const
+  {
+    auto x1 = this->x;
+    auto y1 = this->y;
+    auto x2 = b.x;
+    auto y2 = b.y;
+
+    vector<Point> ret;
+    if (y1 == y2)
+    {
+      for (int x = min(x1, x2); x <= max(x1, x2); ++x)
+      {
+        ret.push_back({ x, y1 });
+      }
+
+    }
+    else if (x1 == x2)
+    {
+      for (int y = min(y1, y2); y <= max(y1, y2); ++y)
+      {
+        ret.push_back({ x1, y });
+      }
+    }
+    else if (!walkInStraightLines && x1 > x2 && y1 > y2)
+    {
+      for (int x = x2, y = y2; y <= y1; ++y, ++x)
+      {
+        ret.push_back({ x, y });
+      }
+    }
+    else if (!walkInStraightLines &&  x1 < x2 && y1 > y2)
+    {
+      for (int x = x1, y = y1; x <= x2; --y, ++x)
+      {
+        ret.push_back({ x, y });
+      }
+    }
+    else if (!walkInStraightLines &&  x1 < x2 && y1 < y2)
+    {
+      for (int x = x1, y = y1; y <= y2; ++y, ++x)
+      {
+        ret.push_back({ x, y });
+      }
+    }
+    else if (!walkInStraightLines &&  x1 > x2 && y1 < y2)
+    {
+      for (int x = x2, y = y2; x <= x1; --y, ++x)
+      {
+        ret.push_back({ x, y });
+      }
+    }
+    return ret;
   }
 };
 

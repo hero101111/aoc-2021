@@ -37,9 +37,9 @@ public:
 
     DynamicMap<int> map;
 
-    for (int i : rangeint(0, 999))
+    for (int i : rangeint(0, 10))
     {
-      for (int j : rangeint(0, 999))
+      for (int j : rangeint(0, 10))
       {
         map[{i, j}] = 0;
       }
@@ -62,8 +62,7 @@ public:
         }
 
       }
-
-      if (x1 == x2)
+      else if (x1 == x2)
       {
         for (int y = min(y1, y2); y <= max(y1, y2); ++y)
         {
@@ -71,12 +70,43 @@ public:
           map[{x1, y}] = 1 + v;
         }
       }
+      else if (x1 > x2 && y1 > y2)
+      {
+        for (int x = x2,  y = y2; y <= y1; ++y, ++x)
+        {
+          map[{x, y}] += 1;
+        }
+      }
+      else if (x1 < x2 && y1 > y2)
+      {
+        for (int x = x1,  y = y1; x <= x2; --y, ++x)
+        {
+          map[{x, y}] += 1;
+        }
+      }
+      else if (x1 < x2 && y1 < y2)
+      {
+        for (int x = x1,  y = y1; y <= y2; ++y, ++x)
+        {
+          map[{x, y}] += 1;
+        }
+      }
+      else if (x1 > x2 && y1 < y2)
+      {
+        for (int x = x2,  y = y2; x <= x1; --y, ++x)
+        {
+          map[{x, y}] += 1;
+        }
+      }
+
+
       //cout << x1 << " " << y1 << " " << x2 << " " << y2 << endl;
     }
 
-   // map.printf(KVERBOSE);
-   // system("PAUSE");
+    map.printf(KVERBOSE);
     ret = map.for_each([](int v) { return v > 1; });
+    //cout << ret << endl;
+    //system("PAUSE");
     //fprintf(KVERBOSE, "ffffff");
     return ret;
   }
@@ -104,8 +134,8 @@ public:
   bool Test() override
   {
     mCurrentInput = "test";
-   // auto p1 = Part1();
-  //  p1;
+    //auto p1 = Part1();
+    //p1;
     return true;
   }
 };

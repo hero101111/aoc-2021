@@ -30,29 +30,34 @@ public:
   {
     LL ret = 0;
     vector<LL> lanterns = stoll(tok(mData[0], ','));
+    list<LL> lan;
+    for (int i = 0; i < lanterns.size(); ++i)
+      lan.insert(end(lan), lanterns[i]);
+
     int day = 0;
 
     while (day < 256)
     {
-      auto lant = lanterns;
-      for (int i = 0; i < lant.size(); ++i)
+      int lim = lan.size();
+      int crt = 0;
+      for (auto it = lan.begin(); it != end(lan) && crt < lim; ++it, ++crt)
       {
-        if (lant[i] > 0)
+        if (*it > 0)
         {
-          lant[i] -= 1;
-          lanterns[i] = lant[i];
+          *it -= 1;
         }
         else
         {
-          lant[i] = 6;
-          lanterns[i] = lant[i];
-          lanterns.push_back(8);
+          *it = 6;
+          lan.insert(end(lan), 8);
         }
       }
      //  printvec(lanterns, cout);
       day++;
+
+      cout << day << " : " << lan.size() <<  endl;
     }
-    ret = lanterns.size();
+    ret = lan.size();
    // fprintf(KVERBOSE, "hello");
     return ret;
   }
@@ -80,7 +85,7 @@ public:
   bool Test() override
   {
     mCurrentInput = "test";
-    Part1();
+   // Part1();
     return true;
   }
 };

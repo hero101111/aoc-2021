@@ -28,8 +28,33 @@ public:
 
   long DoWork1()
   {
+    LL ret = 0;
+    vector<LL> lanterns = stoll(tok(mData[0], ','));
+    int day = 0;
 
-    return 0;
+    while (day < 256)
+    {
+      auto lant = lanterns;
+      for (int i = 0; i < lant.size(); ++i)
+      {
+        if (lant[i] > 0)
+        {
+          lant[i] -= 1;
+          lanterns[i] = lant[i];
+        }
+        else
+        {
+          lant[i] = 6;
+          lanterns[i] = lant[i];
+          lanterns.push_back(8);
+        }
+      }
+     //  printvec(lanterns, cout);
+      day++;
+    }
+    ret = lanterns.size();
+   // fprintf(KVERBOSE, "hello");
+    return ret;
   }
 
   long DoWork2()
@@ -54,6 +79,8 @@ public:
 
   bool Test() override
   {
+    mCurrentInput = "test";
+    Part1();
     return true;
   }
 };

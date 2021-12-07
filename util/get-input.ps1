@@ -6,7 +6,7 @@ if ($day -eq $null) {
 
 while ( (Get-Date).Hour -lt 7 ) {
   Write-Output "zzZ"
-  Start-Sleep -Seconds 1
+  Start-Sleep -Seconds 5
 }
 $downloadToPath = "..\inputs\Day$day\input.txt"
 if (!(Test-Path "..\inputs\Day$day")) {

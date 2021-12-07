@@ -22,6 +22,7 @@
 #include <queue>
 #include <stack>
 #include <assert.h>
+#include <bitset>
 
 #ifdef _MSC_VER
 #include <Windows.h>

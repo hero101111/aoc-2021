@@ -76,6 +76,13 @@ vector<string> tok(string str, char sep = ' ')
   return ret;
 }
 
+ofstream getStream(string filePath, bool append)
+{
+  ofstream fOut;
+  fOut.open(filePath, append ? ios_base::app : ios_base::out);
+  return fOut;
+}
+
 void fprintf(string filePath, string message, bool append = false)
 {
   ofstream fOut;

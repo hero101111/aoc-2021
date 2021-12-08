@@ -566,7 +566,7 @@ struct Point
     vector<Point> ret;
     if (y1 == y2)
     {
-      for (int x = min(x1, x2); x <= max(x1, x2); ++x)
+      for (auto x = min(x1, x2); x <= max(x1, x2); ++x)
       {
         ret.push_back({ x, y1 });
       }
@@ -574,35 +574,35 @@ struct Point
     }
     else if (x1 == x2)
     {
-      for (int y = min(y1, y2); y <= max(y1, y2); ++y)
+      for (auto y = min(y1, y2); y <= max(y1, y2); ++y)
       {
         ret.push_back({ x1, y });
       }
     }
     else if (!walkInStraightLines && x1 > x2 && y1 > y2)
     {
-      for (int x = x2, y = y2; y <= y1; ++y, ++x)
+      for (auto x = x2, y = y2; y <= y1; ++y, ++x)
       {
         ret.push_back({ x, y });
       }
     }
     else if (!walkInStraightLines &&  x1 < x2 && y1 > y2)
     {
-      for (int x = x1, y = y1; x <= x2; --y, ++x)
+      for (auto x = x1, y = y1; x <= x2; --y, ++x)
       {
         ret.push_back({ x, y });
       }
     }
     else if (!walkInStraightLines &&  x1 < x2 && y1 < y2)
     {
-      for (int x = x1, y = y1; y <= y2; ++y, ++x)
+      for (auto x = x1, y = y1; y <= y2; ++y, ++x)
       {
         ret.push_back({ x, y });
       }
     }
     else if (!walkInStraightLines &&  x1 > x2 && y1 < y2)
     {
-      for (int x = x2, y = y2; x <= x1; --y, ++x)
+      for (auto x = x2, y = y2; x <= x1; --y, ++x)
       {
         ret.push_back({ x, y });
       }

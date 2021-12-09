@@ -28,8 +28,40 @@ public:
 
   long DoWork1()
   {
-
-    return 0;
+    //    auto [x1, y1, x2, y2] = RegExMatch4(d, R"((\d+),(\d+) -> (\d+),(\d+))");
+    
+    LL ret = 0;
+    //for (auto d : mData)
+    //{
+    //}
+    vector<LL> inputs = stoll(tok(mData[0], ','));
+    
+    
+    LL minChoice = numeric_limits<LL>::max();
+    
+    
+    LL minV = *min_element(begin(inputs), end(inputs));
+    LL maxV = *max_element(begin(inputs), end(inputs));
+    for (auto el : rangeint(minV, maxV))
+    {
+      
+    //LL minVal = *min_element(begin(inputs), end(inputs));
+    
+      LL t = 0;
+      
+      for (auto i : inputs)
+      {
+        t += (abs(el - i) * (abs(el - i) + 1))  / 2;
+      }
+        
+        if (t < minChoice)
+        {
+          minChoice = t;
+        }
+    }
+    
+    cout << minChoice << endl;
+    return minChoice;
   }
 
   long DoWork2()
@@ -54,6 +86,8 @@ public:
 
   bool Test() override
   {
+    mCurrentInput = "test";
+    Part1();
     return true;
   }
 };

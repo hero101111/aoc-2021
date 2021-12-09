@@ -39,7 +39,7 @@ set<T> vec2set(vector<T> v)
 }
 
 template<typename T>
-bool setContains(set<T> big, set<T> smallSet)
+bool setContains(const set<T> & big, const set<T> & smallSet)
 {
     for (auto el : smallSet)
     {
@@ -47,6 +47,12 @@ bool setContains(set<T> big, set<T> smallSet)
             return false;
     }
     return true;
+}
+
+template<typename T>
+bool setContains(const set<T>& big, const T& val)
+{
+    return big.find(val) != end(big);
 }
 
 template<typename T>

@@ -1012,6 +1012,21 @@ public:
     return ret;
   }
   
+  size_t for_each(function<bool(Point, T&)> func)
+  {
+    size_t ret = 0;
+    for (int i : range_x())
+      for (int j : range_y())
+      {
+        T data;
+        if (at({ i, j }, &data))
+        {
+          ret += func({i, j}, data);
+        }
+      }
+    return ret;
+  }
+  
   size_t count()
   {
     return for_each([](T &){ return true; });
@@ -1105,7 +1120,7 @@ public:
         if (!at({ i, j }, &data))
           data = empty;
 
-        fOut << data;
+        fOut << data << " ";
       }
       fOut << endl;
     }

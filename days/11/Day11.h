@@ -43,13 +43,13 @@ public:
     while (steps < 100)
     {
       auto m2 = m;
-      m2.for_each([&](Point p, int & v){m2[p] += 1; return true;});
+      m2.for_each([&](Point p, int v){m2[p] += 1; return true;});
       
       bool flashed = true;
       while (flashed)
       {
         flashed = false;
-        m2.for_each([&](Point p, int & v)
+        m2.for_each([&](Point p, int v)
         {
           bool skip = false;
           if (v == 0 && m[p] != 0)

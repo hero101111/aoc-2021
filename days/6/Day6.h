@@ -38,7 +38,7 @@ public:
 
     while (day < 256)
     {
-      int lim = lan.size();
+      int lim = (int)lan.size();
       int crt = 0;
       for (auto it = lan.begin(); it != end(lan) && crt < lim; ++it, ++crt)
       {

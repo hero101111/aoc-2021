@@ -29,8 +29,8 @@ public:
   long DoWork1()
   {
     int total = 0;
-    unordered_map<int, int> oneCounts;
-    unordered_map<int, int> zeroCounts;
+    unordered_map<size_t, int> oneCounts;
+    unordered_map<size_t, int> zeroCounts;
     for (auto d : mData)
     {
       total +=1;
@@ -62,7 +62,7 @@ public:
     
     bitset<12> gammaBin(gamma);
     bitset<12> epsilonBin(epsilon);
-    int gammaV = gammaBin.to_ulong(), epsilonV = epsilonBin.to_ulong();
+    int gammaV = (int)gammaBin.to_ulong(), epsilonV = (int)epsilonBin.to_ulong();
     
     return gammaV * epsilonV;
   }
@@ -158,7 +158,7 @@ public:
     
     bitset<12> gammaBin(oxygenRating);
     bitset<12> epsilonBin(scrubber);
-    int gammaV = gammaBin.to_ulong(), epsilonV = epsilonBin.to_ulong();
+    int gammaV = (int)gammaBin.to_ulong(), epsilonV = (int)epsilonBin.to_ulong();
     
     return gammaV * epsilonV;
   }

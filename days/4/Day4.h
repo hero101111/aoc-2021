@@ -80,7 +80,7 @@ public:
     bool mapIsInit = false;
     
     bool readNumbers = false;
-    LL ret = 0;
+    
     LL crtLine = 0;
     for (auto d : mData)
     {
@@ -116,7 +116,7 @@ public:
     set<LL> extracted;
   
     set<int> bucket;
-    for (size_t i = 0; i < maps.size(); ++i)
+    for (int i = 0; i < (int)maps.size(); ++i)
       bucket.insert(i);
     
     bool foundSolution = false;

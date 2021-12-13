@@ -30,7 +30,6 @@ public:
   {
     //    auto [x1, y1, x2, y2] = RegExMatch4(d, R"((\d+),(\d+) -> (\d+),(\d+))");
     
-    LL ret = 0;
     //for (auto d : mData)
     //{
     //}

@@ -997,7 +997,7 @@ public:
     return abs(max_y - min_y) + 1;
   }
 
-  size_t for_each(function<bool(T&)> func)
+  size_t for_each(function<bool(T)> func)
   {
     size_t ret = 0;
     for (int i : range_x())
@@ -1012,7 +1012,7 @@ public:
     return ret;
   }
   
-  size_t for_each(function<bool(Point, T&)> func)
+  size_t for_each(function<bool(Point, T)> func)
   {
     size_t ret = 0;
     for (int i : range_x())

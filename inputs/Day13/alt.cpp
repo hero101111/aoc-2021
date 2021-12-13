@@ -48,12 +48,15 @@ public:
       }
       else
       {
+
+        m.printf(KVERBOSE, '.');
+
         auto [axis, howMuch] = RegExMatch2(d, R"(fold along (x|y)=(\d+))");
 
         if (axis == "x")
         {
           int hM = stoi(howMuch);
-          
+          int offset = 0;
           for (int i = hM; i <= m.max_x; ++i)
           {
             for (auto y : m.range_y())
@@ -62,16 +65,20 @@ public:
               m.at({ i, y }, &t);
               if (t == '#')
               {
-                m[{2 * hM - i, y}] = t;
+                m[{hM - offset, y}] = t;
               }
               m[{i, y}] = '.';
             }
+            offset++;
           }
+          break;
         }
         if (axis == "y")
         {
           int hM = stoi(howMuch);
+          int offset = 0;
 
+          m[{4, 6}] = '@';
           for (auto x : m.range_x())
           {
             for (int i = hM; i <= m.max_y; ++i)
@@ -80,21 +87,14 @@ public:
                 m.at({ x, i }, &t);
                 if (t == '#')
                 {
-                  m[{x, 2 * hM - i}] = t;
+                  m[{x, hM - offset}] = '@';
                 }
-                m[{x, i}] = '.';
+                m[{x, i}] = '/';
             }
+            offset++;
           }
+          break;
         }
-        
-        DynamicMap<char> m2;
-        m.for_each([&](Point p, char c)
-        {
-          if (c == '#')
-            m2[p] = c;
-          return true;
-        });
-        m = m2;
       }
     }
 
@@ -128,7 +128,7 @@ public:
   bool Test() override
   {
     mCurrentInput = "test";
-   // Part1();
+    Part1();
     return true;
   }
 

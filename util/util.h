@@ -231,12 +231,12 @@ struct Point
 
   Point operator -(const Point& other) const
   {
-    return { x - other.x, y - other.y, z - other.z };
+    return { x - other.x, y - other.y, z - other.z, w - other.w };
   }
 
   Point operator +(const Point& other) const
   {
-    return { x + other.x, y + other.y, z + other.z };
+    return { x + other.x, y + other.y, z + other.z, w - other.w };
   }
 
   bool operator < (const Point& other) const
@@ -253,42 +253,42 @@ struct Point
 
   Point Down() const
   {
-    return Point{ x, y + 1, z };
+    return Point{ x, y + 1, z, w };
   }
 
   Point Up() const
   {
-    return Point{ x, y - 1, z };
+    return Point{ x, y - 1, z, w };
   }
 
   Point Left() const
   {
-    return Point{ x - 1, y, z };
+    return Point{ x - 1, y, z, w };
   }
 
   Point Right() const
   {
-    return Point{ x + 1, y, z };
+    return Point{ x + 1, y, z, w };
   }
 
   Point UpLeft() const
   {
-    return Point{ x - 1, y - 1, z };
+    return Point{ x - 1, y - 1, z, w };
   }
 
   Point UpRight() const
   {
-    return Point{ x + 1, y - 1, z };
+    return Point{ x + 1, y - 1, z, w };
   }
 
   Point DownLeft() const
   {
-    return Point{ x - 1, y + 1, z };
+    return Point{ x - 1, y + 1, z, w };
   }
 
   Point DownRight() const
   {
-    return Point{ x + 1, y + 1, z };
+    return Point{ x + 1, y + 1, z, w };
   }
 
   Point GetRotatedAround(Point pivot, int rotAngleDegrees)
@@ -328,6 +328,8 @@ struct Point
     ret.y = stoll(tokens[1]);
     if (tokens.size() > 2)
       ret.z = stoll(tokens[2]);
+    if (tokens.size() > 3)
+      ret.w = stoll(tokens[3]);
 
     return ret;
   }
@@ -547,14 +549,25 @@ struct Point
     return ret;
   }
 
+  vector<Point> GetDirectNeighbours() const
+  {
+    vector<Point> ret;
+    ret.push_back(Left());
+    ret.push_back(Up());
+    ret.push_back(Right());
+    ret.push_back(Down());
+
+    return ret;
+  }
+
   long long ManhattanDist(const Point& p) const
   {
-    return abs(x - p.x) + abs(y - p.y) + abs(z - p.z);
+    return abs(x - p.x) + abs(y - p.y) + abs(z - p.z) + abs(w - p.w);
   }
 
   double DistanceTo(const Point& p) const
   {
-    return sqrt(pow(p.x - x, 2) + pow(p.y - y, 2) + pow(p.z - z, 2));
+    return sqrt(pow(p.x - x, 2) + pow(p.y - y, 2) + pow(p.z - z, 2)) + +pow(p.w - w, 2));
   }
 
   bool IsInGrid(int width, int height, int depth = 0) const

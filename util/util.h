@@ -1120,7 +1120,7 @@ public:
         if (!at({ i, j }, &data))
           data = empty;
 
-        fOut << data << " ";
+        fOut << data;
       }
       fOut << endl;
     }
@@ -1617,6 +1617,36 @@ private:
     for (auto path : paths)
       ret.push_back(mapper.translate(path));
     return ret;
+  }
+
+  void FromDynamicMap(DynamicMap<int> m)
+  {
+    for (auto x : rangeint(m.min_x, m.max_x))
+    {
+      for (auto y : rangeint(m.min_y, m.max_y))
+      {
+        Point p(x, y);
+
+        int vAtP = 0;
+
+        if (!m.at(p, &vAtP))
+          continue;
+
+        int v = 0;
+        Point toRight = p.Right();
+        Point toDown = p.Down();
+        if (m.at(toRight, &v))
+        {
+          AddEdge(p, toRight, v);
+          AddEdge(toRight, p, vAtP);
+        }
+        if (m.at(toDown, &v))
+        {
+          AddEdge(p, toDown, v);
+          AddEdge(toDown, p, vAtP);
+        }
+      }
+    }
   }
 };
 

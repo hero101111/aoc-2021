@@ -41,24 +41,47 @@ public:
     {
       DynamicMap<int> genMap2 = genMap;
       for (int x : rangeint(0, 4))
-      {        
-        genMap2.for_each([&](Point p, int v)
+      {
+        m.insertAt(genMap2, { x * (genMap2.max_x + 1),  y * (genMap2.max_y + 1) });
+
+        genMap2.transform([&](Point p, int v)
           {
-            m[{p.x + x * (genMap2.max_x + 1), p.y + y * (genMap2.max_y + 1)}] = v;
-            genMap2[p] = (v + 1) % 10 == 0 ? 1 : (v + 1);
-            return true;
+            return (v + 1) % 10 == 0 ? 1 : (v + 1);
           });
       }
 
-      genMap.for_each([&](Point p, int v)
+      genMap.transform([&](Point p, int v)
         {
-          genMap[p] = (v + 1) % 10 == 0 ? 1 : (v + 1);          
-
-          return true;
+          return (v + 1) % 10 == 0 ? 1 : (v + 1);
         });
     }
 
-    g.FromDynamicMap(m);
+    for (auto x : m.range_x())
+    {
+      for (auto y : m.range_y())
+      {
+        Point p(x, y);
+
+        int vAtP = 0;
+
+        if (!m.at(p, &vAtP))
+          continue;
+
+        int v = 0;
+        Point toRight = p.Right();
+        Point toDown = p.Down();
+        if (m.at(toRight, &v))
+        {
+          g.AddEdge(p, toRight, v);
+          g.AddEdge(toRight, p, vAtP);
+        }
+        if (m.at(toDown, &v))
+        {
+          g.AddEdge(p, toDown, v);
+          g.AddEdge(toDown, p, vAtP);
+        }
+      }
+    }
 
     auto walk = g.GetShortestPath(Point(m.min_x, m.min_y), Point(m.max_x, m.max_y));
     

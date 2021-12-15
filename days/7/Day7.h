@@ -26,7 +26,7 @@ public:
     return "7";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     //    auto [x1, y1, x2, y2] = RegExMatch4(d, R"((\d+),(\d+) -> (\d+),(\d+))");
     
@@ -63,7 +63,7 @@ public:
     return minChoice;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

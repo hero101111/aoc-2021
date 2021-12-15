@@ -303,8 +303,8 @@ struct Point
     }
 
     Point ret;
-    ret.x = toRotate.x * cosDegrees(rotAngleDegrees) - sign * toRotate.y * sinDegress(rotAngleDegrees);
-    ret.y = toRotate.y * cosDegrees(rotAngleDegrees) + sign * toRotate.x * sinDegress(rotAngleDegrees);
+    ret.x = (LL)(toRotate.x * cosDegrees(rotAngleDegrees) - sign * toRotate.y * sinDegress(rotAngleDegrees));
+    ret.y = (LL)(toRotate.y * cosDegrees(rotAngleDegrees) + sign * toRotate.x * sinDegress(rotAngleDegrees));
 
     ret = ret + pivot;
 
@@ -836,10 +836,10 @@ public:
   
   DynamicMap<T>& operator =(const vector<T> & aOther)
   {
-    max_y = numeric_limits<int>::min();
-    max_x = numeric_limits<int>::min();
-    min_x = numeric_limits<int>::max();
-    min_y = numeric_limits<int>::max();
+    max_y = numeric_limits<LL>::min();
+    max_x = numeric_limits<LL>::min();
+    min_x = numeric_limits<LL>::max();
+    min_y = numeric_limits<LL>::max();
     data = {};
     for (size_t i = 0; i < aOther.size(); ++i)
     {
@@ -968,16 +968,16 @@ public:
     return true;
   }
 
-  vector<int> range_x() const
+  vector<LL> range_x() const
   {
-    vector<int> ret(width());
+    vector<LL> ret(width());
     iota(begin(ret), end(ret), min_x);
     return ret;
   }
 
-  vector<int> range_y() const
+  vector<LL> range_y() const
   {
-    vector<int> ret(height());
+    vector<LL> ret(height());
     iota(begin(ret), end(ret), min_y);
     return ret;
   }
@@ -1000,8 +1000,8 @@ public:
   size_t for_each(function<bool(T)> func)
   {
     size_t ret = 0;
-    for (int i : range_x())
-      for (int j : range_y())
+    for (auto i : range_x())
+      for (auto j : range_y())
       {
         T data;
         if (at({ i, j }, &data))
@@ -1015,8 +1015,8 @@ public:
   size_t for_each(function<bool(Point, T)> func)
   {
     size_t ret = 0;
-    for (int i : range_x())
-      for (int j : range_y())
+    for (auto i : range_x())
+      for (auto j : range_y())
       {
         T data;
         if (at({ i, j }, &data))
@@ -1112,9 +1112,9 @@ public:
     if (prologue.size() > 0)
       fOut << prologue << endl;
 
-    for (int j : range_y())
+    for (auto j : range_y())
     {
-      for (int i : range_x())
+      for (auto i : range_x())
       {
         T data;
         if (!at({ i, j }, &data))
@@ -1712,9 +1712,9 @@ void toConsole(Point p, const string & s) {
   DWORD dw;
   COORD here;
   HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-  here.X = p.x;
-  here.Y = p.y;
-  WriteConsoleOutputCharacter(hStdOut, s.c_str(), s.size(), here, &dw);
+  here.X = (SHORT)p.x;
+  here.Y = (SHORT)p.y;
+  WriteConsoleOutputCharacter(hStdOut, s.c_str(), (DWORD)s.size(), here, &dw);
 #endif
 #ifdef __APPLE__
   assert(!"Unsupported on current platform");
@@ -1757,8 +1757,8 @@ auto findInMapByValue(map<KT, VT> & m, VT & val)
 
 #ifdef _MSC_VER
 
-#define KINPUT   "C:\\repos\\aoc-2021\\\inputs\\Day"
-#define KOUTPUT  "C:\\repos\\aoc-2021\\\output\\out.txt"
-#define KVERBOSE "C:\\repos\\aoc-2021\\\output\\verbose.txt"
+#define KINPUT   "C:\\repos\\aoc-2021\\inputs\\Day"
+#define KOUTPUT  "C:\\repos\\aoc-2021\\output\\out.txt"
+#define KVERBOSE "C:\\repos\\aoc-2021\\output\\verbose.txt"
 
 #endif

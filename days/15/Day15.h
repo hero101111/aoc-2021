@@ -26,13 +26,14 @@ public:
     return "15";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
-
-    return 0;
+    LL ret = 0;
+    cout << "Day15 " << mCurrentInput << " P1: " << ret << endl;
+    return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;
@@ -54,6 +55,8 @@ public:
 
   bool Test() override
   {
+    mCurrentInput = "test";
+    //Part1();
     return true;
   }
 };

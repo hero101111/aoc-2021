@@ -26,7 +26,7 @@ public:
     return "1";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     LL ret = 0;
     LL prev = -1;
@@ -41,7 +41,7 @@ public:
     return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
     vector<pair<int, LL>> windows;
     

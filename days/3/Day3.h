@@ -26,7 +26,7 @@ public:
     return "3";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     int total = 0;
     unordered_map<size_t, int> oneCounts;
@@ -62,12 +62,12 @@ public:
     
     bitset<12> gammaBin(gamma);
     bitset<12> epsilonBin(epsilon);
-    int gammaV = (int)gammaBin.to_ulong(), epsilonV = (int)epsilonBin.to_ulong();
+    LL gammaV = (LL)gammaBin.to_ulong(), epsilonV = (LL)epsilonBin.to_ulong();
     
     return gammaV * epsilonV;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
     int total = 0;
     
@@ -158,7 +158,7 @@ public:
     
     bitset<12> gammaBin(oxygenRating);
     bitset<12> epsilonBin(scrubber);
-    int gammaV = (int)gammaBin.to_ulong(), epsilonV = (int)epsilonBin.to_ulong();
+    LL gammaV = (LL)gammaBin.to_ulong(), epsilonV = (LL)epsilonBin.to_ulong();
     
     return gammaV * epsilonV;
   }

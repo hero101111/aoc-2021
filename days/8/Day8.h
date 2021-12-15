@@ -34,7 +34,7 @@ public:
     return ret;
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
       LL ret = 0;
       for (auto d : mData)
@@ -180,7 +180,7 @@ public:
       return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

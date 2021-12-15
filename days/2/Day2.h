@@ -26,7 +26,7 @@ public:
     return "2";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     int horiz = 0;
     int depth = 0;
@@ -52,7 +52,7 @@ public:
     return horiz * depth;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
     int horiz = 0;
     int depth = 0;

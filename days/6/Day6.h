@@ -26,7 +26,7 @@ public:
     return "6";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     LL ret = 0;
     vector<LL> lanterns = stoll(tok(mData[0], ','));
@@ -62,7 +62,7 @@ public:
     return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

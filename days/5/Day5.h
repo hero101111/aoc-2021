@@ -32,7 +32,7 @@ public:
     for (auto d : mData)
     {
       auto [x1, y1, x2, y2] = RegExMatch4(d, R"((\d+),(\d+) -> (\d+),(\d+))");
-      for (auto w : Point(x1, y1).GetTo(Point(x2, y2), isPartOne))
+      for (const auto & w : Point(x1, y1).GetTo(Point(x2, y2), isPartOne))
       {
         map[w] += 1;
       }

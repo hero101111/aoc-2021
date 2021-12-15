@@ -26,13 +26,13 @@ public:
     return "17";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
 
     return 0;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

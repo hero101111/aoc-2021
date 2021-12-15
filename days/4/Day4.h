@@ -26,41 +26,10 @@ public:
     return "4";
   }
   
-  bool setContains(set<LL> big, set<LL> small)
-  {
-    for (auto el : small)
-    {
-      if (big.find(el) == end(big))
-        return false;
-    }
-    return true;
-  }
-  
-  set<LL> getDifference(set<LL> a, set<LL> b)
-  {
-    set<LL> ret;
-    for (auto el : a)
-    {
-      if (b.find(el) == end(b))
-      {
-        ret.insert(el);
-      }
-    }
-    return ret;
-  }
-  
   set<LL> extract(DynamicMap<LL> m)
   {
     set<LL> ret;
     m.for_each([&](LL i){ret.insert(i); return true;});
-    return ret;
-  }
-  
-  set<LL> vec2set(vector<LL> v)
-  {
-    set<LL> ret;
-    for (auto d : v)
-      ret.insert(d);
     return ret;
   }
 
@@ -103,7 +72,7 @@ public:
         crtLine = 0;
       }
       vector<LL> crtLineItems = stoll(tok(d, ' '));
-      for (LL i = 0; i < crtLineItems.size(); ++i)
+      for (LL i = 0; i < (LL)crtLineItems.size(); ++i)
       {
         currentMap[{i, crtLine}] = crtLineItems[i];
       }

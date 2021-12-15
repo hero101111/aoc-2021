@@ -44,7 +44,7 @@ public:
       if (islower(nl[0]))
       {
         // visit at most once
-        int visitedCount = count(begin(crtNodes), end(crtNodes), nl);
+        size_t visitedCount = count(begin(crtNodes), end(crtNodes), nl);
 
         if (nl == "start")
         {
@@ -65,7 +65,7 @@ public:
     }
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     LL ret = 0;
 
@@ -112,7 +112,7 @@ public:
     return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

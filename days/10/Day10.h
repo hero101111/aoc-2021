@@ -27,7 +27,7 @@ public:
     return "10";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     /*string text2 = RegexReplace(text, R"(\d)", "more than $1");
     auto [kv] = RegExMatch1(text, R"(we have (\d) monkeys)");
@@ -91,7 +91,7 @@ public:
     return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

@@ -27,7 +27,7 @@ public:
     return "9";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     LL ret = 0;
     DynamicMap<int> m;
@@ -58,7 +58,7 @@ public:
         
        // vector<int> vals;
         
-        for (auto n : neigh)
+        for (const auto & n : neigh)
         {
           if (abs(n.x - x) + abs( n.y - y) > 1)
             continue;
@@ -84,7 +84,7 @@ public:
     return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

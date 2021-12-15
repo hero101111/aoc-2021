@@ -26,7 +26,7 @@ public:
     return "11";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     LL ret = 0;
     
@@ -61,7 +61,7 @@ public:
             flashed = true;
             flashes++;
             auto neighs = p.GetNeighbours();
-            for (auto n : neighs)
+            for (const auto & n : neighs)
             {
               if (m2[n] == 0 && m[n] != 0)
                 continue;
@@ -87,7 +87,7 @@ public:
     return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

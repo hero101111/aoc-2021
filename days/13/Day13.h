@@ -26,7 +26,7 @@ public:
     return "13";
   }
 
-  long DoWork1()
+  LL DoWork1()
   {
     LL ret = 0;
 
@@ -52,9 +52,9 @@ public:
 
         if (axis == "x")
         {
-          int hM = stoi(howMuch);
+          LL hM = stoll(howMuch);
           
-          for (int i = hM; i <= m.max_x; ++i)
+          for (LL i = hM; i <= m.max_x; ++i)
           {
             for (auto y : m.range_y())
             {
@@ -70,11 +70,11 @@ public:
         }
         if (axis == "y")
         {
-          int hM = stoi(howMuch);
+          LL hM = stoll(howMuch);
 
           for (auto x : m.range_x())
           {
-            for (int i = hM; i <= m.max_y; ++i)
+            for (LL i = hM; i <= m.max_y; ++i)
             {
                 char t = '.';
                 m.at({ x, i }, &t);
@@ -105,7 +105,7 @@ public:
     return ret;
   }
 
-  long DoWork2()
+  LL DoWork2()
   {
 
     return 0;

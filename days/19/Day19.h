@@ -17,13 +17,17 @@ public:
   unordered_set<Point> beacons;
   Point location;
 
-  auto transformBeacons(WorldView worldView) -> unordered_set<Point>
+  unordered_set<Point> transformBeacons(WorldView worldView)
   {
     auto transformPoint = [](Point p, WorldView worldLine) -> Point
     {
+
+      // transform with worldline base change vector w into p.x * w[1] + p.y * w[2] + p.z * w[3]
       auto pxw1 = worldLine.forwards * p.x;
       auto pyw2 = worldLine.upwards * p.y;
       auto pzw3 = worldLine.rightside * p.z;
+
+      // very automated way of multiplying a matrix and a vector safely :s
       Point ret = { pxw1[0] + pyw2[0] + pzw3[0], pxw1[1] + pyw2[1] + pzw3[1] , pxw1[2] + pyw2[2] + pzw3[2] };
       return ret;
     };
@@ -61,7 +65,7 @@ public:
     return "19";
   }
 
-  static auto getWorldViews() -> vector<WorldView>
+  vector<WorldView> getWorldViews()
   {
     vector<WorldView> worlds;
     vector<Point> directions =
@@ -103,14 +107,12 @@ public:
     Scanner crtScanner;
     for (auto d : mData)
     {
-      if (d.empty()) {
+      if (d == "")
         continue;
-}
       if (d[0] == '-' && d[1] == '-')
       {
-        if (crtScannerId >= 0) {
+        if (crtScannerId >= 0)
           scanners.push_back(crtScanner);
-}
         
         crtScanner = Scanner();
         crtScanner.id = ++crtScannerId;
@@ -126,9 +128,8 @@ public:
     unordered_set<Point> worldBeacons;
     unordered_set<int> unlockedScanners;
     unlockedScanners.insert(0);
-    for (auto b : scanners[0].beacons) {
+    for (auto b : scanners[0].beacons)
       worldBeacons.insert(b);
-}
 
     auto worlds = getWorldViews();
 
@@ -142,15 +143,12 @@ public:
       {
         for (int scannerSeek = 0; scannerSeek < scanners.size(); scannerSeek++)
         {
-          if (scannerSeek == *scannerBase) {
+          if (scannerSeek == *scannerBase)
             continue;
-}
-          if (unlockedScanners.find(scannerSeek) != end(unlockedScanners)) {
+          if (unlockedScanners.find(scannerSeek) != end(unlockedScanners))
             continue;
-}
-          if (checkedPairs.find(make_pair(*scannerBase, scannerSeek)) != end(checkedPairs)) {
+          if (checkedPairs.find(make_pair(*scannerBase, scannerSeek)) != end(checkedPairs))
             continue;
-}
 
           if (*scannerBase == 1 && scannerSeek == 4)
           {
@@ -182,14 +180,12 @@ public:
                 int pp = 1; pp++;
                 }
                 unordered_set<Point> transformedWithDelta;
-                for (auto b : otherBeaconsTransformed) {
+                for (auto b : otherBeaconsTransformed)
                   transformedWithDelta.insert(b + worldDelta);
-}
 
                 LL diffCount = getSetEqCount(transformedWithDelta, baseScanner.beacons);
-                if (diffCount > maxDiff) {
+                if (diffCount > maxDiff)
                   maxDiff = diffCount;
-}
 
                 if (diffCount >= 12)
                 {
@@ -221,32 +217,26 @@ public:
 
                   break;
                 }
-                if (isDirty) {
+                if (isDirty)
                   break;
-}
               }
-              if (isDirty) {
+              if (isDirty)
                 break;
-}
             }
-            if (isDirty) {
+            if (isDirty)
               break;
-}
           }
-          if (isDirty) {
+          if (isDirty)
             break;
-}
         }
-        if (isDirty) {
+        if (isDirty)
           break;
-}
       }
 
     } while (isDirty);
 
-     for (auto b : worldBeacons) {
+     for (auto b : worldBeacons)
        cout << b.ToString3() << endl;
-}
     
      ret = worldBeacons.size();
 
@@ -259,9 +249,8 @@ public:
          if (scanner1.id != scanner2.id)
          {
            LL manh = scanner1.location.ManhattanDist(scanner2.location);
-           if (manh > maxManh) {
+           if (manh > maxManh)
              maxManh = manh;
-}
          }
        }
      }

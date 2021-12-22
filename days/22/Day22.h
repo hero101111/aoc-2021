@@ -85,45 +85,45 @@ public:
     for (auto d : mData)
     {
       auto [on, xMin, xMax, yMin, yMax, zMin, zMax] = RegExMatch7(d, R"((on|off) x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+))");
-      Cuboid readCube;
-      readCube.isOn = on == "on";
-      readCube.pMin = { xMin, yMin, zMin };
-      readCube.pMax = { xMax, yMax, zMax };
+      Cuboid readCuboid;
+      readCuboid.isOn = on == "on";
+      readCuboid.pMin = { xMin, yMin, zMin };
+      readCuboid.pMax = { xMax, yMax, zMax };
 
-      vector<Cuboid> subCoboids;
-      for (auto existingCube : cuboids)
+      vector<Cuboid> subCuboids;
+      for (auto existingCuboid : cuboids)
       {
         bool sharesSpace = true;
         for (int i : rangeint(0, 2))
-          sharesSpace &= (readCube.pMin[i] <= existingCube.pMax[i] && readCube.pMax[i] >= existingCube.pMin[i]);
+          sharesSpace &= (readCuboid.pMin[i] <= existingCuboid.pMax[i] && readCuboid.pMax[i] >= existingCuboid.pMin[i]);
 
         if (!sharesSpace)
-          subCoboids.push_back(existingCube);
+          subCuboids.push_back(existingCuboid);
         else
         {
           // get to splitting this baby up
           for (auto i : rangeint(0, 2))
           {
-            if (existingCube.pMin[i] <= readCube.pMin[i])
+            if (existingCuboid.pMin[i] <= readCuboid.pMin[i])
             {
-              Cuboid newCube = existingCube;
-              newCube.pMax[i] = readCube.pMin[i] - 1;
-              existingCube.pMin[i] = readCube.pMin[i];
-              subCoboids.push_back(newCube);
+              Cuboid newCube = existingCuboid;
+              newCube.pMax[i] = readCuboid.pMin[i] - 1;
+              existingCuboid.pMin[i] = readCuboid.pMin[i];
+              subCuboids.push_back(newCube);
             }
-            if (existingCube.pMax[i] >= readCube.pMax[i])
+            if (existingCuboid.pMax[i] >= readCuboid.pMax[i])
             {
-              Cuboid newCube = existingCube;
-              newCube.pMin[i] = readCube.pMax[i] + 1;
-              existingCube.pMax[i] = readCube.pMax[i];
-              subCoboids.push_back(newCube);
+              Cuboid newCube = existingCuboid;
+              newCube.pMin[i] = readCuboid.pMax[i] + 1;
+              existingCuboid.pMax[i] = readCuboid.pMax[i];
+              subCuboids.push_back(newCube);
             }
           }
         }
       }
-      subCoboids.push_back(readCube);
+      subCuboids.push_back(readCuboid);
 
-      cuboids = subCoboids;
+      cuboids = subCuboids;
     }
 
     LL ret = 0;

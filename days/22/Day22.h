@@ -26,7 +26,7 @@ public:
     return "22";
   }
 
-  struct Step
+  struct Cube
   {
     Point pMin, pMax;
     bool isOn;
@@ -34,13 +34,11 @@ public:
 
   auto DoWork1() -> LL
   {
-    LL ret = 0;
-
-    vector<Step> steps;
+    vector<Cube> steps;
     for (auto d : mData)
     {
       auto [on, xMin, xMax, yMin, yMax, zMin, zMax] = RegExMatch7(d, R"((on|off) x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+))");
-      Step s;
+      Cube s;
       s.isOn = on == "on";
       s.pMin = { xMin, yMin, zMin };
       s.pMax = { xMax, yMax, zMax };
@@ -60,32 +58,17 @@ public:
     for (auto s2 : steps)
     {
       cout << step++ << endl;
-      Step s = s2;
+      Cube s = s2;
       bool toBreak = false;
 
        for (auto x : rangeint(-50, 50))
          for (auto y : rangeint(-50, 50))
            for (auto z : rangeint(-50, 50))
-           {
              if (x >= s.pMin.x && x <= s.pMax.x && y >= s.pMin.y && y <= s.pMax.y && z >= s.pMin.z && z <= s.pMax.z)
-             {
-               if (s.isOn)
-               {
-               //  m[{x, y, z}] = 1;
-                 myMap[{x, y, z}] = 1;
-               }
-               else
-               {
-                // m[{x, y, z}] = 0;
-                 myMap[{x, y, z}] = 0;
-               }
-             }
-           }
-      //LL p = m.for_each([](int v) { return v == 1; });
-      //int k = 0; ++k;
+               s.isOn = myMap[{x, y, z}] = 1;
     }
     
-    ret = 0;
+    LL ret = 0;
     for (auto p : myMap)
     {
       if (p.second == 1)
@@ -97,23 +80,17 @@ public:
 
   auto DoWork2() -> LL
   {
-    vector<Step> cubes;
+    vector<Cube> cubes;
 
-    int c = 0;
     for (auto d : mData)
     {
-      c++;
-
-      //if (c == 150)
-      //  break;
-     // cout << c << endl;
       auto [on, xMin, xMax, yMin, yMax, zMin, zMax] = RegExMatch7(d, R"((on|off) x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+))");
-      Step readCube;
+      Cube readCube;
       readCube.isOn = on == "on";
       readCube.pMin = { xMin, yMin, zMin };
       readCube.pMax = { xMax, yMax, zMax };
 
-      vector<Step> subCubes;
+      vector<Cube> subCubes;
       for (auto existingCube : cubes)
       {
         bool sharesSpace = true;
@@ -124,20 +101,19 @@ public:
           subCubes.push_back(existingCube);
         else
         {
-          // go to splitting this baby up
-
+          // get to splitting this baby up
           for (auto i : rangeint(0, 2))
           {
             if (existingCube.pMin[i] <= readCube.pMin[i])
             {
-              Step newCube = existingCube;
+              Cube newCube = existingCube;
               newCube.pMax[i] = readCube.pMin[i] - 1;
               existingCube.pMin[i] = readCube.pMin[i];
               subCubes.push_back(newCube);
             }
             if (existingCube.pMax[i] >= readCube.pMax[i])
             {
-              Step newCube = existingCube;
+              Cube newCube = existingCube;
               newCube.pMin[i] = readCube.pMax[i] + 1;
               existingCube.pMax[i] = readCube.pMax[i];
               subCubes.push_back(newCube);
@@ -145,11 +121,9 @@ public:
           }
         }
       }
-
       subCubes.push_back(readCube);
 
       cubes = subCubes;
-      //cout << cubes.size() << endl;
     }
 
     LL ret = 0;
@@ -161,10 +135,6 @@ public:
         for (int i : rangeint(0, 2))
           r *= (c.pMax[i] - c.pMin[i] + 1);
         ret += r;
-      }
-      else
-      {
-        //assert(false);
       }
     }
 

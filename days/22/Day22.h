@@ -26,7 +26,7 @@ public:
     return "22";
   }
 
-  struct Cube
+  struct Cuboid
   {
     Point pMin, pMax;
     bool isOn;
@@ -34,11 +34,11 @@ public:
 
   auto DoWork1() -> LL
   {
-    vector<Cube> steps;
+    vector<Cuboid> steps;
     for (auto d : mData)
     {
       auto [on, xMin, xMax, yMin, yMax, zMin, zMax] = RegExMatch7(d, R"((on|off) x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+))");
-      Cube s;
+      Cuboid s;
       s.isOn = on == "on";
       s.pMin = { xMin, yMin, zMin };
       s.pMax = { xMax, yMax, zMax };
@@ -58,7 +58,7 @@ public:
     for (auto s2 : steps)
     {
       cout << step++ << endl;
-      Cube s = s2;
+      Cuboid s = s2;
       bool toBreak = false;
 
        for (auto x : rangeint(-50, 50))
@@ -80,25 +80,25 @@ public:
 
   auto DoWork2() -> LL
   {
-    vector<Cube> cubes;
+    vector<Cuboid> cuboids;
 
     for (auto d : mData)
     {
       auto [on, xMin, xMax, yMin, yMax, zMin, zMax] = RegExMatch7(d, R"((on|off) x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+))");
-      Cube readCube;
+      Cuboid readCube;
       readCube.isOn = on == "on";
       readCube.pMin = { xMin, yMin, zMin };
       readCube.pMax = { xMax, yMax, zMax };
 
-      vector<Cube> subCubes;
-      for (auto existingCube : cubes)
+      vector<Cuboid> subCoboids;
+      for (auto existingCube : cuboids)
       {
         bool sharesSpace = true;
         for (int i : rangeint(0, 2))
           sharesSpace &= (readCube.pMin[i] <= existingCube.pMax[i] && readCube.pMax[i] >= existingCube.pMin[i]);
 
         if (!sharesSpace)
-          subCubes.push_back(existingCube);
+          subCoboids.push_back(existingCube);
         else
         {
           // get to splitting this baby up
@@ -106,28 +106,28 @@ public:
           {
             if (existingCube.pMin[i] <= readCube.pMin[i])
             {
-              Cube newCube = existingCube;
+              Cuboid newCube = existingCube;
               newCube.pMax[i] = readCube.pMin[i] - 1;
               existingCube.pMin[i] = readCube.pMin[i];
-              subCubes.push_back(newCube);
+              subCoboids.push_back(newCube);
             }
             if (existingCube.pMax[i] >= readCube.pMax[i])
             {
-              Cube newCube = existingCube;
+              Cuboid newCube = existingCube;
               newCube.pMin[i] = readCube.pMax[i] + 1;
               existingCube.pMax[i] = readCube.pMax[i];
-              subCubes.push_back(newCube);
+              subCoboids.push_back(newCube);
             }
           }
         }
       }
-      subCubes.push_back(readCube);
+      subCoboids.push_back(readCube);
 
-      cubes = subCubes;
+      cuboids = subCoboids;
     }
 
     LL ret = 0;
-    for (auto c : cubes)
+    for (auto c : cuboids)
     {
       if (c.isOn)
       {

@@ -13,18 +13,18 @@ public:
     verbose.open(KVERBOSE, ios_base::out);
   }
 
-  virtual string Part1() = 0;
-  virtual string Part2() = 0;
+  virtual auto Part1() -> string = 0;
+  virtual auto Part2() -> string = 0;
 
   virtual ~ISolutionDay() { verbose.close(); };
 
-  virtual bool Test() { mCurrentInput = "input";  return true; }
+  virtual auto Test() -> bool { mCurrentInput = "input";  return true; }
 
-  virtual string GetDay() { return "0";  }
+  virtual auto GetDay() -> string { return "0";  }
 
   string mCurrentInput{ "input" };
 
-  string GetInputPath() 
+  auto GetInputPath() -> string 
   {
     const string day = GetDay(); 
     assert(day != "0");

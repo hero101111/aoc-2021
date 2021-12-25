@@ -280,6 +280,27 @@ struct Point
         assert(!"Invalid coordinate");
         return x;
     }
+    auto operator[](string index) const -> const long long&
+    {
+      if (index == "x" || index == "X")
+      {
+        return x;
+      }
+      if (index == "y" || index == "Y")
+      {
+        return y;
+      }
+      if (index == "z" || index == "Z")
+      {
+        return z;
+      }
+      if (index == "w" || index == "W")
+      {
+        return w;
+      }
+      assert(!"Invalid coordinate");
+      return x;
+    }
 
     auto operator==(const Point &other) const -> bool
     {
@@ -1208,6 +1229,23 @@ template <class T> class DynamicMap
             }
         }
         return ret;
+    }
+
+    auto for_eachYX(function<bool(Point, T)> func) -> size_t
+    {
+      size_t ret = 0;
+      for (auto j : range_y())
+      {
+        for (auto i : range_x())
+        {
+          T data;
+          if (at({ i, j }, &data))
+          {
+            ret += func({ i, j }, data);
+          }
+        }
+      }
+      return ret;
     }
 
     void transform(function<T(Point, T)> func)
